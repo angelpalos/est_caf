@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-12">
+    {{#if ped}}
+    
+      <!--Tabla creada-->
+      <table class="table">
+        <thead class="table-dark">
+          <!--informacion en el encabezado de la tabla -->
+          <tr>
+            <th class="w-10 py-2 px-4 fs-5 ..."></th>
+            <th class="w-20 py-4 px-4 fs-5 ...">Folio</th>
+            <th class="w-1/4 py-4 fs-5 ...">Estado</th>
+            <th class="w-1/2 py-4 px-5 fs-5 ...">Detalles</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each ped}}
+          <tr>
+            <!--Se pone la informacion de la base de datos en la tabla-->
+            <td class="py-3 px-2 fs-4"></td>
+            <td class="py-3 px-6 fs-4">{{folio}}</td>
+            <td class="p-3 fs-4">{{tip_status}}</td>
+            <td class="p-3 fs-4">
+                <form action="/detalle" method="post">
+                    <input type="hidden" name="folio" id="folio" value="{{folio}}">
+                    <button type="submint" class="btn btn-dark w-50">Detalles del Pedido</button>
+                </form>
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+      {{else}}
+      <br><br>
+        <div class="msj">
+            <center>
+                <h3>No hay productos actualmente</h3><br>
+                <a href="/menu"><button class="btn btn-dark">Regresar al menu</button></a>
+            </center>
+        </div>
+        <br><br>
+      {{/if}}
+    </div>
+  </div>
+</body>
+</html>

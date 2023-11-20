@@ -1,0 +1,155 @@
+<style>
+    .botoncomprar {
+        /*color del fondo del boton*/
+        background-color: rgb(135, 67, 16);
+        /*color dee la letra del boton*/
+        color: white;
+        /*ancho del boton*/
+        width: 60%;
+        /*alto del boton*/
+        height: 50px;
+        /*tipo de letra del boton*/
+        font-family: Arial, Helvetica, sans-serif;
+        /*redondear el boton*/
+        border-radius: 12px;
+        /*cuando pasamos el mause por eel boton cambia el color del fondo*/
+    }
+
+    .botoncomprar:hover {
+        background-color: rgb(163, 82, 20);
+    }
+
+    input {
+        text-align: center;
+    }
+
+    div .card {
+        border-radius: 20px;
+
+    }
+
+    h5 {
+        font-family: Arial, Helvetica, sans-serif;
+        align-items: center;
+
+    }
+
+    p {
+        font-family: Arial, Helvetica, sans-serif;
+
+    }
+
+    div.card-img-top {
+        width: 538px;
+        height: 352px;
+
+    }
+
+    .imagenes:hover img {
+        transform: scale(0.9);
+
+    }
+
+    div.card:hover {
+        box-shadow: 1px 2px 20px rgb(141, 138, 138);
+
+    }
+
+    .buscador {
+        position: relative;
+        left: 10rem;
+        /*margin-left: 16rem;
+        margin-right: 8rem;*/
+    }
+
+    .texto-no-encontrado {
+
+        background-color: #ffff;
+        width: 200px;
+        height: 100px;
+    }
+
+    div.row {
+        margin-top: 3rem;
+    }
+
+    h5 {
+
+        position: relative;
+        left: 19%;
+        top: 30%;
+
+
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Menu</title>
+</head>
+
+<body>
+    <section name="" id="" class="p-5">
+        <div class="container">
+
+            <!--buscador de el menu-->
+            <div class="buscador">
+                <!--con la funcion buscar se buscan los articulos del menu-->
+                <form action="/pers/busca" class="d-flex px-40" role="search" method="post" id="buscador">
+                    <input class="form-control me-2 w-50 " type="search" placeholder="Buscar" aria-label="Buscar"
+                        name="buscador">
+                    <button class="btn btn-dark btn-lg hover-red" type="submit">Buscar</button>
+                </form>
+
+            </div>
+
+
+            <div class="row">
+                {{#each pers}}
+                <div class="col-4 mt-5">
+                    <div class="card" style="width: 20rem ">
+                        <div class="imagenes">
+                            <img src="{{imagen}}" class="card-img-top " style="height: 270px;  " alt="...">
+
+                        </div>
+
+                        <div class="card-body">
+                            <span class="fs-2">{{name}}</span>
+                            
+                            <p class="fs-5"> {{description}}</p>
+                            <p class="fs-5">Costo: ${{precio}}</p>
+
+                            <center>
+                                <form action="/pers/agregar" method="post">
+                                    <input type="hidden" value="{{id_producto}}" name="id_producto">
+                                    <input type="hidden" value="{{precio}}" name="precio">
+                                    <input type="submit" value="Agregar al Carrito" class="btn btn-success btn-lg">
+                                </form>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+
+                <div class="texto-no-encontrado">
+                    <h5 style="font-size:xx-large; font-family:Arial, Helvetica, sans-serif;">No se encontro el
+                        producto, por favor vuelve a buscar</h5>
+                </div>
+
+                {{/each}}
+
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

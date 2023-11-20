@@ -1,0 +1,69 @@
+<style>
+    .precio{
+        position: relative;
+        
+        margin-top:  -10%;
+    }.cantidad{
+        
+        position: relative;
+        bottom: -38px;
+
+    }.name{
+        position: relative;
+        left: 20px;
+        
+    }.detalle{
+        position: relative;
+        bottom: -40px;
+    }div.card{
+        box-shadow: 8px 8px 30px 4px;
+    }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Pedido</title>
+</head>
+
+<body>
+    <center class="mt-4">
+        <h1>Detalle del Pedido</h1>
+    </center>
+
+    <center class="mt-5">
+        <div class="card" style="width: 28rem;"><br>
+            {{#if folio}}
+            <h2>Numero de Pedido: {{folio}}</h2>
+            {{/if}}
+                <div class="card-body">
+                    <div class="detalle">
+                        <h4 class="text-start fs-3">Detalle:</h4>
+                    </div>
+                    {{#each details}}
+                        
+                        <div class="cantidad">
+                            <h4 class="text-start">{{cantidad}}</h4>
+                        </div>
+                        <div class="name">
+                            <h4 class="text-start">{{name}}</h4>
+                        </div>
+                        
+                    <div class="precio">
+                        <h4 class="text-end fs-3">Precio c/u: {{precio}}</h4>
+                    </div>
+                        
+                        <hr>
+                    {{/each}}                
+                    <br><br>
+                </div>  
+            </div>
+        </div>
+    </center>
+    
+</body>
+</html>

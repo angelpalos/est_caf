@@ -1,0 +1,185 @@
+<style>
+  .boton-compra {
+    margin-top: 2rem;
+
+
+
+
+  }
+
+  .cantidad {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 1px;
+  }
+
+  .boton-agrega {
+    margin-left: -120px;
+
+  }.subtotal{
+    font-weight: bold;
+    position: relative;
+    left: 22%;
+    bottom: 35px;
+    
+  }.texto-subtotal{
+    font-weight: bold;
+    margin-left: 1rem;
+  }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width= , initial-scale=1.0">
+  <title>Carrito de Compras</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.1/tailwind.min.css%22%3E">
+  <!-- Fontawesome Link -->
+  <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <center>
+    <h1 class="py-3">Productos del Carrito</h1>
+  </center>
+
+
+
+  <!--<button data-test="cart-btn" type="button" aria-label="checkout" class="al aq bi bf jb el cc jc ev bm bn bo bp bq br bd c0 be c1"><svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" class="cd ce c6 cf"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.666 11.333h10.333l1.334-8h-11l-.267-2h-3.4v2h1.667l1.333 8zm1.333 3.334A1.333 1.333 0 105 12a1.333 1.333 0 000 2.667zm9.334-1.334a1.333 1.333 0 11-2.667 0 1.333 1.333 0 012.667 0z"></path></svg><div class="jd cz">Carrito • 0</div></button>-->
+  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mt-12">
+
+
+      {{#if pers}}
+
+      <!--Tabla creada-->
+      <table class="table">
+        <thead class="table-dark w-auto">
+          <tr class="w-100">
+
+            <!--<th >Usuario</th>-->
+            <th class="px-4 h5 mw-10">Producto</th>
+            <th class="h5"> Precio/Unitario</th>
+
+
+            <th></th>
+
+
+            <th class="h5 w-10">Cantidad</th>
+            <th> </th>
+
+
+          </tr>
+        </thead>
+        {{#each pers}}
+        <tr>
+          <!--obtiene la informacion de la base de datos y la imprime en la tabla-->
+         
+
+          <td class=" w-20 h4 px-4 py-3">{{name}}</td>
+
+
+          <td class="h4 px-1 py-3 w-10">{{precio}}</td>
+
+
+
+
+          <td class="px-1 py-3 w-10">
+            <!--boton para eliminar producto con metodo delete-->
+
+            <form action="/pers/elimina" method="POST">
+              <input type="hidden" value="{{id_producto}}" name="id_producto">
+              <button class="bg-red-600 text-white px-3 py-2 rounded-sm hover:bg-red-700" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg"
+                  viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+                </svg>
+            </form>
+
+
+
+          </td>
+          <!--muestra la cantidad de unidades hay en el carrito-->
+          <div class="cantidad">
+            <td class=" px-1 py-3 h4">{{cantidad}}</td>
+
+          </div>
+
+
+
+
+
+
+
+
+
+          <td class=" w-25 py-3 px-1">
+            <!--agrega un producto mas al la cantidad total-->
+            <div class="boton-agrega">
+              <form action="/pers/agregacarrito" method="POST" class="mx-2">
+                <input type="hidden" value="{{id_producto}}" name="id_producto">
+                <button class="bg-green-600 text-white px-3 py-2 rounded-sm hover:bg-green-700" type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                  </svg>
+                </button>
+              </form>
+
+            </div>
+
+          </td>
+
+          <!--muestra el costo del producto-->
+
+        </tr>
+        {{/each}}
+        </tbody>
+        
+        
+      </table>
+      <tfoot>
+        <div class="texto-subtotal">
+          <span class="fs-4">  Subtotal:</span>
+        </div>
+        <div class="subtotal">
+          <span class="fs-4">{{total}}<span>
+        </div>
+
+      </tfoot>
+    </div>
+    <div class="boton-compra">
+
+      <form class="mx-2">
+        <input type="hidden" name="id_compra">
+        <a href="/comprar" class="btn btn-success btn-lg" type="submit">
+          <h5>Comprar ahora</h5>
+        </a>
+      </form>
+
+
+    </div>
+
+    {{else}}
+    <div class="error">
+      <center>
+        <h2>El carrito se encuentra vacio</h2>
+      </center>
+
+    </div>
+
+  </div>
+
+  {{/if}}
+  </div>
+</body>
+
+</html>
