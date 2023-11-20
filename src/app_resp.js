@@ -4,7 +4,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: 'I9fdOsl467op4msy8UjvHjeLM5UswGpQ4jQsuOrn2krxLUUJUaSCXHupxpTTbDaB',
-  baseURL: 'https://estudiante-cafeteria.up.railway.app/',
+  baseURL: 'http://https://estudiante-cafeteria.up.railway.app//callback',
   clientID: '9tJW8H5eq2MMEsGWvxHZk9bShGXwuHUT',
   issuerBaseURL: 'https://dev-g20uxge5op6jxy12.us.auth0.com'
 };
