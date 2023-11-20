@@ -1,10 +1,12 @@
+const { auth } = require('express-openid-connect');
+
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: 'a long, randomly-generated string stored in env',
-  baseURL: 'http://localhost:3000',
-  clientID: 'UeXMJQBGZXze7DgWvNBt7sOvpYjd2Fw9',
-  issuerBaseURL: 'https://metacafetery.us.auth0.com'
+  secret: 'I9fdOsl467op4msy8UjvHjeLM5UswGpQ4jQsuOrn2krxLUUJUaSCXHupxpTTbDaB',
+  baseURL: 'https://estudiante-cafeteria.up.railway.app/',
+  clientID: '9tJW8H5eq2MMEsGWvxHZk9bShGXwuHUT',
+  issuerBaseURL: 'https://dev-g20uxge5op6jxy12.us.auth0.com'
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
