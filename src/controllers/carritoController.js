@@ -12,7 +12,7 @@ function indexcr(req, res) {
         conn.query('SELECT SUM(cantidad*precio) FROM carrito WHERE id_producto',[id],(err,tota) =>{
           const to = tota[0]["SUM(cantidad*precio)"]
           res.render('pages/carrito',{pers,total: to, name: req.oidc.user.name})
-          console.log(tota, '---------')
+          //console.log(tota, '---------')
         })
       })
       //console.log("--------", pers)
