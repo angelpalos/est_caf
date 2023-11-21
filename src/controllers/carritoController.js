@@ -28,8 +28,8 @@ function agregar(req, res) {
   const data = req.body
   const name = req.oidc.user.email
   console.log("Nombre: ",name);
-  console.log("Producto: ",data.id_producto);
-  console.log("Precio: ",data.precio);
+  console.log("Producto: ",data[0].id_producto);
+  console.log("Precio: ",data[0].precio);
 
   req.getConnection((err, conn) => { 
     conn.query('SELECT * FROM carrito WHERE id_producto = ? AND email = ?, precio =?', [data.id_producto, name, data.precio], (err, rows) => {
