@@ -36,7 +36,7 @@ function agregar(req, res) {
       if (rows.length > 0) {
         const can = rows[0].cantidad + 1
         req.getConnection((err, conn) => {
-          conn.query('UPDATE carrito SET cantidad = ? WHERE id_producto= ? AND email = ?, precio =?', [can,id_producto, name, precio], (err, carr) => {
+          conn.query('UPDATE carrito SET cantidad = ? WHERE id_producto= ? AND email = ?', [can,id_producto, name, precio], (err, carr) => {
             if (err) throw err;
             res.redirect('/')
           });
