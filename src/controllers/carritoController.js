@@ -156,7 +156,7 @@ function agregacarrito(req, res){
         req.getConnection((err, conn) => {
           conn.query('UPDATE carrito SET cantidad = ? WHERE id_producto= ? AND email = ?', [can, data.id_producto, name], (err, carr) => {
             if (err) throw err;
-            res.redirect('/carrito')
+            res.redirect('/carrito');
           });
         });
       }
