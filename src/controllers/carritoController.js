@@ -130,8 +130,7 @@ function recp(req,res) {
 
       req.getConnection((err, conn) => {
         //selecciona la tabla de carrito
-        conn.query('SELECT a.folio,a.fecha,d.tip_status,a.corre_emp,a.correo_clie,b.cantidad,b.precio,c.name FROM pedido a,detalle b, product c, status d WHERE a.folio = ? AND a.folio = b.folio AND b.id_producto = c.id_producto and a.id_status=d.id_status',[id],(err,ped)=>{
-          //console.log(ped)
+        conn.query('SELECT a.folio,a.fecha,d.tip_status,a.correo_clie,b.cantidad,b.precio,c.name FROM pedido a,detalle b, product c, status d WHERE a.folio = ? AND a.folio = b.folio AND b.id_producto = c.id_producto and a.id_status=d.id_status',[id],(err,ped)=>{
           if(err) throw err
             req.getConnection((err,conn) => {
               conn.query('SELECT SUM(cantidad*precio) FROM detalle WHERE folio =?',[id],(err,tota) =>{
