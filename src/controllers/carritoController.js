@@ -37,7 +37,7 @@ function agregar(req, res) {
       if (rows.length > 0) {
         const can = rows[0].cantidad + 1
         req.getConnection((err, conn) => {
-          conn.query('UPDATE carrito SET cantidad = ? WHERE id_producto= ? AND email = ?, precio =?', [can, data.id_producto, name, data.precio], (err, carr) => {
+          conn.query('UPDATE carrito SET cantidad = ? WHERE id_producto= ? AND email = ?, precio =?', [can, data.id_producto, name, precio], (err, carr) => {
             if (err) throw err;
             res.redirect('/')
           });
@@ -45,7 +45,7 @@ function agregar(req, res) {
       } else {
         //agrega los productos solicitados al carrito de compras por medio de los queries 
         req.getConnection((err, conn) => {
-          conn.query('INSERT INTO carrito SET id_producto = ?, email = ?,cantidad = 1, precio =?', [data.id_producto, name, data.precio], (err, carr) => {
+          conn.query('INSERT INTO carrito SET id_producto = ?, email = ?,cantidad = 1, precio =?', [data.id_producto, name, precio], (err, carr) => {
             if (err) throw err;
             res.redirect('/');
           });
