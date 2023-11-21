@@ -27,10 +27,12 @@ function indexcr(req, res) {
 function agregar(req, res) {
   const data = req.body
   const name = req.oidc.user.email
-  //console.log("Nombre: ",name);
+  console.log("Nombre: ",name);
+  console.log("Body: ",data);
 
   req.getConnection((err, conn) => { 
     conn.query('SELECT * FROM carrito WHERE id_producto = ? AND email = ?, precio =?', [data.id_producto, name, data.precio], (err, rows) => {
+
       //valida si ya existe el producto, si es asi se actualiza la columna de cantidad agregando una unidad mas
       if (rows.length > 0) {
         const can = rows[0].cantidad + 1
