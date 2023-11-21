@@ -32,7 +32,7 @@ function agregar(req, res) {
 
   req.getConnection((err, conn) => { 
     conn.query('SELECT * FROM carrito WHERE id_producto = ? AND email = ?, precio =?', [data.id_producto, name, data.precio], (err, rows) => {
-
+      console.log("Rows",rows);
       //valida si ya existe el producto, si es asi se actualiza la columna de cantidad agregando una unidad mas
       if (rows.length > 0) {
         const can = rows[0].cantidad + 1
