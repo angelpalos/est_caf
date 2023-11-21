@@ -12,7 +12,7 @@ function indexcr(req, res) {
         conn.query('SELECT SUM(cantidad*precio) FROM carrito WHERE id_producto',[id],(err,tota) =>{
           const to = tota[0]["SUM(cantidad*precio)"]
           res.render('pages/carrito',{pers,total: to, name: req.oidc.user.name})
-          //console.log(tota, '---------')
+          console.log(tota, '---------')
         })
       })
       //console.log("--------", pers)
@@ -92,35 +92,32 @@ function pedido(req, res){
   let date = new Date();
   let datenow =  date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
   req.getConnection((err, conn) => {
-    conn.query("SELECT folio from pedido",(err,fol) =>{
-      const folio = fol[fol.length-1].folio;
-      conn.query("INSERT INTO pedido (folio,fecha,id_status,correo_clie) VALUES (?+1,?,1,?)",[folio,datenow,name],(err,row)=>{
-        if(err) throw err
-        req.getConnection((err, conn) => {
-          conn.query('SELECT * FROM pedido',(err,data)=>{
-            if(err) throw err
-            const nump = data.length - 1;
-            const num = data[nump].folio;
-            req.getConnection((err,conn) =>{
-              conn.query('SELECT a.id_producto, a.email, a.cantidad, b.precio, b.name FROM carrito a, product b WHERE b.id_producto=a.id_producto and a.email=?',[name],(err,carr) =>{
-                let cont = 0;
-                let row = carr.length;
-                while(cont < row){
-                  let carr_pr = carr[cont].name;
-                  console.log(carr_pr);
-                  conn.query('insert into detalle(folio,id_producto,cantidad,precio,name) values(?,?,?,?,?)',[folio,carr[cont].id_producto,carr[cont].cantidad,carr[cont].precio,carr[cont].name],(err,details)=>{
-                    if(err) throw err;
-                  })
-                  cont=cont+1;  
-                }
-                conn.query('DELETE FROM carrito WHERE email = ?',[name],(err,rowa) => {
-                  res.redirect('/pedido/'+num)
+    conn.query("INSERT INTO pedido (fecha,id_status,correo_clie) VALUES (?,1,?)",[datenow,name],(err,row)=>{
+      if(err) throw err
+      req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM pedido',(err,data)=>{
+          if(err) throw err
+          const nump = data.length - 1;
+          const num = data[nump].folio;
+          req.getConnection((err,conn) =>{
+            conn.query('SELECT a.id_producto, a.email, a.cantidad, b.precio, b.name FROM carrito a, product b WHERE b.id_producto=a.id_producto and a.email=?',[name],(err,carr) =>{
+              let cont = 0;
+              let row = carr.length;
+              while(cont < row){
+                let carr_pr = carr[cont].name;
+                console.log(carr_pr);
+                conn.query('insert into detalle(folio,id_producto,cantidad,precio,name) values(?,?,?,?,?)',[num,carr[cont].id_producto,carr[cont].cantidad,carr[cont].precio,carr[cont].name],(err,details)=>{
+                  if(err) throw err;
                 })
-              }) 
-            })
+                cont=cont+1;  
+              }
+              conn.query('DELETE FROM carrito WHERE email = ?',[name],(err,rowa) => {
+                res.redirect('/pedido/'+num)
+              })
+            }) 
           })
-        });
-      })
+        })
+      });
     })
   });
 }
@@ -130,7 +127,8 @@ function recp(req,res) {
 
       req.getConnection((err, conn) => {
         //selecciona la tabla de carrito
-        conn.query('SELECT a.folio,a.fecha,d.tip_status,a.correo_clie,b.cantidad,b.precio,c.name FROM pedido a,detalle b, product c, status d WHERE a.folio = ? AND a.folio = b.folio AND b.id_producto = c.id_producto and a.id_status=d.id_status',[id],(err,ped)=>{
+        conn.query('SELECT a.folio,a.fecha,d.tip_status,a.corre_emp,a.correo_clie,b.cantidad,b.precio,c.name FROM pedido a,detalle b, product c, status d WHERE a.folio = ? AND a.folio = b.folio AND b.id_producto = c.id_producto and a.id_status=d.id_status',[id],(err,ped)=>{
+          //console.log(ped)
           if(err) throw err
             req.getConnection((err,conn) => {
               conn.query('SELECT SUM(cantidad*precio) FROM detalle WHERE folio =?',[id],(err,tota) =>{
