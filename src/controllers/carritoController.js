@@ -25,11 +25,10 @@ function indexcr(req, res) {
 //agrega los productos solicitados al carrito de compras por medio de los queries 
 //se definen dos constantes y recolecta el email obtenuido del auth0
 function agregar(req, res) {
-  const data = req.body
-  const name = req.oidc.user.email
-  console.log("Nombre: ",name);
-  console.log("Producto: ",data.id_producto);
-  console.log("Precio: ",data.precio);
+  const data = req.body;
+  const name = req.oidc.user.email;
+  const precio = parseFloat(data.precio);
+  console.log(precio);
 
   req.getConnection((err, conn) => { 
     conn.query('SELECT * FROM carrito WHERE id_producto = ? AND email = ?', [data.id_producto, name], (err, rows) => {
