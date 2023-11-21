@@ -108,7 +108,7 @@ function pedido(req, res){
                 while(cont < row){
                   let carr_pr = carr[cont].name;
                   console.log(carr_pr);
-                  conn.query('insert into detalle(folio,id_producto,cantidad,precio,name) values(?,?,?,?,?)',[num,carr[cont].id_producto,carr[cont].cantidad,carr[cont].precio,carr[cont].name],(err,details)=>{
+                  conn.query('insert into detalle(folio,id_producto,cantidad,precio,name) values(?,?,?,?,?)',[folio,carr[cont].id_producto,carr[cont].cantidad,carr[cont].precio,carr[cont].name],(err,details)=>{
                     if(err) throw err;
                   })
                   cont=cont+1;  
