@@ -92,16 +92,16 @@ function pedido(req, res){
   let date = new Date();
   let datenow =  date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
   req.getConnection((err, conn) => {
-    //selecciona la tabla de carrito
+    conn.query("SELECT folio from pedido",(err,fol) =>{
+      console.log(fol);
+    })
     conn.query("INSERT INTO pedido (fecha,id_status,correo_clie) VALUES (?,1,?)",[datenow,name],(err,row)=>{
       if(err) throw err
       req.getConnection((err, conn) => {
-        //selecciona la tabla de carrito
         conn.query('SELECT * FROM pedido',(err,data)=>{
           if(err) throw err
           const nump = data.length - 1;
           const num = data[nump].folio;
-          //console.log(data);
           req.getConnection((err,conn) =>{
             conn.query('SELECT a.id_producto, a.email, a.cantidad, b.precio, b.name FROM carrito a, product b WHERE b.id_producto=a.id_producto and a.email=?',[name],(err,carr) =>{
               let cont = 0;
@@ -136,8 +136,7 @@ function recp(req,res) {
             req.getConnection((err,conn) => {
               conn.query('SELECT SUM(cantidad*precio) FROM detalle WHERE folio =?',[id],(err,tota) =>{
                 const to = tota[0]["SUM(cantidad*precio)"]
-                res.render('pages/compra',{ped,total: to, name: req.oidc.user.name})
-                console.log(to, '---------')
+                res.render('pages/compra',{ped,total: to, name: req.oidc.user.name});
               })
             })
         })})
