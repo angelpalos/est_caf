@@ -93,7 +93,7 @@ function pedido(req, res){
   let datenow =  date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
   req.getConnection((err, conn) => {
     conn.query("SELECT folio from pedido",(err,fol) =>{
-      console.log(fol);
+      console.log(fol[fol.length-1].folio);
     })
     conn.query("INSERT INTO pedido (fecha,id_status,correo_clie) VALUES (?,1,?)",[datenow,name],(err,row)=>{
       if(err) throw err
