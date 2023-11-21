@@ -94,33 +94,33 @@ function pedido(req, res){
   req.getConnection((err, conn) => {
     conn.query("SELECT folio from pedido",(err,fol) =>{
       const folio = fol[fol.length-1].folio;
-    })
-    conn.query("INSERT INTO pedido (folio,fecha,id_status,correo_clie) VALUES (?+1,?,1,?)",[,datenow,name],(err,row)=>{
-      if(err) throw err
-      req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM pedido',(err,data)=>{
-          if(err) throw err
-          const nump = data.length - 1;
-          const num = data[nump].folio;
-          req.getConnection((err,conn) =>{
-            conn.query('SELECT a.id_producto, a.email, a.cantidad, b.precio, b.name FROM carrito a, product b WHERE b.id_producto=a.id_producto and a.email=?',[name],(err,carr) =>{
-              let cont = 0;
-              let row = carr.length;
-              while(cont < row){
-                let carr_pr = carr[cont].name;
-                console.log(carr_pr);
-                conn.query('insert into detalle(folio,id_producto,cantidad,precio,name) values(?,?,?,?,?)',[num,carr[cont].id_producto,carr[cont].cantidad,carr[cont].precio,carr[cont].name],(err,details)=>{
-                  if(err) throw err;
+      conn.query("INSERT INTO pedido (folio,fecha,id_status,correo_clie) VALUES (?+1,?,1,?)",[folio,datenow,name],(err,row)=>{
+        if(err) throw err
+        req.getConnection((err, conn) => {
+          conn.query('SELECT * FROM pedido',(err,data)=>{
+            if(err) throw err
+            const nump = data.length - 1;
+            const num = data[nump].folio;
+            req.getConnection((err,conn) =>{
+              conn.query('SELECT a.id_producto, a.email, a.cantidad, b.precio, b.name FROM carrito a, product b WHERE b.id_producto=a.id_producto and a.email=?',[name],(err,carr) =>{
+                let cont = 0;
+                let row = carr.length;
+                while(cont < row){
+                  let carr_pr = carr[cont].name;
+                  console.log(carr_pr);
+                  conn.query('insert into detalle(folio,id_producto,cantidad,precio,name) values(?,?,?,?,?)',[num,carr[cont].id_producto,carr[cont].cantidad,carr[cont].precio,carr[cont].name],(err,details)=>{
+                    if(err) throw err;
+                  })
+                  cont=cont+1;  
+                }
+                conn.query('DELETE FROM carrito WHERE email = ?',[name],(err,rowa) => {
+                  res.redirect('/pedido/'+num)
                 })
-                cont=cont+1;  
-              }
-              conn.query('DELETE FROM carrito WHERE email = ?',[name],(err,rowa) => {
-                res.redirect('/pedido/'+num)
-              })
-            }) 
+              }) 
+            })
           })
-        })
-      });
+        });
+      })
     })
   });
 }
